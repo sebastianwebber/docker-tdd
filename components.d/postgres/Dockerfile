@@ -38,6 +38,10 @@ FROM ${FULL_BASE_IMAGE}
     RUN dnf install -y \
         readline \
         zlib
-        
+
     COPY --from=build /usr/pgsql-13  /usr/pgsql-13
+
+    RUN useradd --home-dir /var/lib/pgsql postgres
+
+    USER postgres
 

@@ -22,6 +22,12 @@ class ContainerInstance
     @container.delete(:force => true)
   end
 
+  def exec(cmd_to_run, **args)
+    result = container_exec @container_id, cmd_to_run
+
+    nice_out(cmd_to_run, result, args)
+  end
+
   private
 
   def create(cmd)

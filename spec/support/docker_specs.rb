@@ -31,6 +31,12 @@ module Docker
       check_versions(cmd, result, @rpm_packages, pkg, nil)
     end
 
+    def user_exists?(user)
+      cmd = "/bin/grep #{user} /etc/passwd"
+      result = container_exec @container_id, cmd
+      result[2] == 0 || nice_out(cmd, result).to_s
+    end
+
     private
 
     def check_versions(cmd, result, ref, pkg, version)

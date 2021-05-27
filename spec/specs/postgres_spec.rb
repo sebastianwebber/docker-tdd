@@ -30,10 +30,6 @@ TargetSupport.for_each_version("postgres") do |instance|
       end
     end
 
-    # it "should thrown an error" do
-    #   skip "not yet"
-    # end
-
-    # include_examples "user examples", instance, "postgres", "/var/lib/postgresql"
+    include_examples "user examples", instance, "postgres", "/var/lib/pgsql"
   end
 end
