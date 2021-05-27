@@ -10,9 +10,29 @@ TargetSupport.for_each_version("postgres") do |instance|
       instance.delete
     end
 
-    it "should thrown an error" do
-      skip "not yet"
+    [
+      "readline-devel",
+      "zlib-devel",
+      "gcc",
+      "make",
+    ].each do |pkg|
+      it "should NOT contain the #{pkg} package installed" do
+        expect(instance.package_installed?(pkg)).to_not be true
+      end
     end
+
+    [
+      "readline",
+      "zlib",
+    ].each do |pkg|
+      it "should contain the #{pkg} package installed" do
+        expect(instance.package_installed?(pkg)).to be true
+      end
+    end
+
+    # it "should thrown an error" do
+    #   skip "not yet"
+    # end
 
     # include_examples "user examples", instance, "postgres", "/var/lib/postgresql"
   end

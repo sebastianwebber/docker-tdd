@@ -41,11 +41,16 @@ class Target
   end
 
   def cmd_flags
-    {
+    disable_cache = (ENV["DOCKER_DISABLE_CACHE"].to_s =~ /^(true|t|yes|y|1)$/i) == 0
+    out = {
       "file" => "components.d/#{@name}/Dockerfile",
     }.map do |k, v|
       "--#{k}='#{v}'"
-    end.join " "
+    end
+
+    out.push "--no-cache" if disable_cache
+
+    out.join " "
   end
 
   def build_args
