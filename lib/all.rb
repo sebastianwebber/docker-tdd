@@ -6,8 +6,8 @@ module All
       File.basename(f)
     end.select do |f|
       component.nil? || f == component
-    end.each do |comp|
-      yield Component.new comp
+    end.map do |comp|
+      Component.new comp
     end
   end
 end
