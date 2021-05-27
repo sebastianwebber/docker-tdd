@@ -1,0 +1,6 @@
+---
+build_args:
+  full_base_image: centos:8
+
+tags:
+  - "docker.io/sebastianwebber/<%= component.name %>:v<%= component.version %>"

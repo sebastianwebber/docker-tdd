@@ -1,0 +1,5 @@
+ARG FULL_BASE_IMAGE
+
+FROM ${FULL_BASE_IMAGE}
+
+    RUN echo "hello"
