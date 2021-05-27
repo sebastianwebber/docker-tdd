@@ -5,8 +5,8 @@ class Target
 
   def initialize(name, version, config)
     @name = name
-    @version = version
-    @config = config.clone
+    @version = version.to_s
+    @config = config
   end
 
   def build()
@@ -55,6 +55,7 @@ class Target
 
   def build_args
     @config.build_args["version"] = @version
+    @config.build_args["base_version"] = @version.split(".").first
 
     @config.build_args.map do |k, v|
       "--build-arg='#{k.upcase}=#{v}'"

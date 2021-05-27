@@ -2,6 +2,7 @@ ARG FULL_BASE_IMAGE
 
 FROM ${FULL_BASE_IMAGE} AS build
     ARG VERSION
+    ARG BASE_VERSION
 
     WORKDIR /code
 
@@ -22,24 +23,25 @@ FROM ${FULL_BASE_IMAGE} AS build
     WORKDIR /code/postgresql-${VERSION}
 
     RUN ./configure \
-        --prefix=/usr/pgsql-13 \
-        --includedir=/usr/pgsql-13/include \
-        --mandir=/usr/pgsql-13/share/man \
-        --datadir=/usr/pgsql-13/share \
-        --libdir=/usr/pgsql-13/lib \
+        --prefix=/usr/pgsql-${BASE_VERSION} \
+        --includedir=/usr/pgsql-${BASE_VERSION}/include \
+        --mandir=/usr/pgsql-${BASE_VERSION}/share/man \
+        --datadir=/usr/pgsql-${BASE_VERSION}/share \
+        --libdir=/usr/pgsql-${BASE_VERSION}/lib \
         --with-system-tzdata=/usr/share/zoneinfo \
         --sysconfdir=/etc/sysconfig/pgsql \
-        --docdir=/usr/pgsql-13/doc
+        --docdir=/usr/pgsql-${BASE_VERSION}/doc
     RUN make install -j 16
     RUN make install -j 16 -C contrib
 
 FROM ${FULL_BASE_IMAGE}
+    ARG BASE_VERSION
 
     RUN dnf install -y \
         readline \
         zlib
 
-    COPY --from=build /usr/pgsql-13  /usr/pgsql-13
+    COPY --from=build /usr/pgsql-${BASE_VERSION}  /usr/pgsql-${BASE_VERSION}
 
     RUN useradd --home-dir /var/lib/pgsql postgres
 
