@@ -1,5 +1,7 @@
 RSpec.shared_examples "postgres examples" do |instance|
   it "can run queries with JIT without errors" do
+    skip "not supported" if instance.target.version.start_with? "10"
+    
     result = instance.exec_query("set jit=on; set jit_above_cost = 0.0001; EXPLAIN(ANALYZE) select generate_series(1, 1000);")
 
     expect(result[:exit_code]).to eq(0), result.to_s

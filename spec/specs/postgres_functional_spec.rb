@@ -8,7 +8,7 @@ PostgresSupport.for_each_version("postgres") do |instance|
     end
 
     after :all do
-      # instance.delete
+      instance.delete
     end
 
     include_examples "postgres examples", instance
